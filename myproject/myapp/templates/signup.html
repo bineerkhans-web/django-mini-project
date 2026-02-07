@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% load static %}
+		<title>REAL ESTATE - Sign Up</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container">
+				<a class="navbar-brand" href="{% url 'myapp:home' %}">Stayhome</a>
+			</div>
+		</nav>
+		<section class="ftco-section">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6">
+						<h2 class="mb-4">Create your account</h2>
+						{% if messages %}
+						<ul>
+							{% for message in messages %}
+							<li>{{ message }}</li>
+							{% endfor %}
+						</ul>
+						{% endif %}
+						<form method="post" action="{% url 'myapp:signup' %}">
+							{% csrf_token %}
+							<div class="form-group mb-3">
+								<label>Username</label>
+								<input type="text" name="username" class="form-control" required>
+							</div>
+							<div class="form-group mb-3">
+								<label>Email (optional)</label>
+								<input type="email" name="email" class="form-control">
+							</div>
+							<div class="form-group mb-3">
+								<label>Phone (optional)</label>
+								<input type="text" name="phone" class="form-control">
+							</div>
+							<div class="form-group mb-3">
+								<label>Address (optional)</label>
+								<input type="text" name="address" class="form-control">
+							</div>
+							<div class="form-group mb-3">
+								<label>Password</label>
+								<input type="password" name="password1" class="form-control" required>
+							</div>
+							<div class="form-group mb-4">
+								<label>Confirm Password</label>
+								<input type="password" name="password2" class="form-control" required>
+							</div>
+							<button type="submit" class="btn btn-primary">Sign Up</button>
+							<a class="btn btn-link" href="{% url 'myapp:signin' %}">Already have an account? Sign In</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script src="{% static 'js/main.js' %}"></script>
+	</body>
+</html>
+

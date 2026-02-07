@@ -1,0 +1,390 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{{ plot.title }} - Property Details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+      .blurred-content {
+        filter: blur(6px);
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+  	<div class="py-1 bg-black top">
+    	<div class="container">
+    		<div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
+	    		<div class="col-lg-12 d-block">
+		    		<div class="row d-flex">
+		    			<div class="col-md pr-4 d-flex topper align-items-center">
+					    	<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
+						    {% if user.is_authenticated and user.phone %}
+							<span class="text">{{ user.phone }}</span>
+							{% elif not user.is_authenticated %}
+							<span class="text">+ 1235 2355 98</span>
+							{% endif %}
+					    </div>
+					    <div class="col-md pr-4 d-flex topper align-items-center">
+					    	<div class="icon mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
+							{% if user.is_authenticated and user.email %}
+						    <span class="text">{{ user.email }}</span>
+							{% elif not user.is_authenticated %}
+						    <span class="text">youremail@email.com</span>
+							{% endif %}
+					    </div>
+					    <div class="col-md-5 pr-4 d-flex topper align-items-center text-lg-right justify-content-end">
+						    {% if user.is_authenticated %}
+						    <div class="dropdown mb-0 register-link">
+							    <a class="dropdown-toggle text-white" href="#" id="singlePropertyTopUserDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    {{ user.username }}
+							    </a>
+							    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="singlePropertyTopUserDropdown">
+								    <a class="dropdown-item" href="{% url 'myapp:profile' %}">Profile</a>
+								    <a class="dropdown-item" href="{% url 'myapp:signout' %}">Sign Out</a>
+							    </div>
+						    </div>
+						    {% else %}
+						    <p class="mb-0 register-link"><a href="{% url 'myapp:signup' %}" class="mr-3">Sign Up</a><a href="{% url 'myapp:signin' %}">Sign In</a></p>
+						    {% endif %}
+					    </div>
+				    </div>
+			    </div>
+		    </div>
+		  </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light site-navbar-target" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="{% url 'myapp:home' %}">Stayhome</a>
+	      <button class="navbar-toggler js-fh5co-nav-toggle fh5co-nav-toggle" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav nav ml-auto">
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#home-section" class="nav-link"><span>Home</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#services-section" class="nav-link"><span>Services</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:properties' %}" class="nav-link"><span>Properties</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#about-section" class="nav-link"><span>About</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#workflow-section" class="nav-link"><span>How it works</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#agent-section" class="nav-link"><span>Agent</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#blog-section" class="nav-link"><span>Blog</span></a></li>
+	          <li class="nav-item"><a href="{% url 'myapp:home' %}#contact-section" class="nav-link"><span>Contact</span></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+	  
+	  <section class="hero-wrap hero-wrap-2" style="background-image: url('{% static 'images/bg_3.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-start">
+          <div class="col-md-9 ftco-animate pb-4">
+            <h1 class="mb-3 bread">{{ plot.title }}</h1>
+             <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'myapp:home' %}">Home <i class="ion-ios-arrow-forward"></i></a></span> <span><a href="{% url 'myapp:properties' %}">Properties <i class="ion-ios-arrow-forward"></i></a></span> <span>{{ plot.title }} <i class="ion-ios-arrow-forward"></i></span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section ftco-services-2">
+      <div class="container">
+        <div class="row {% if not can_view_fully %}blurred-content{% endif %}">
+        	<div class="col-md-12 property-wrap mb-5">
+    				<div class="row">
+    					<div class="col-md-6 d-flex ftco-animate">
+    						{% if plot.images.all %}
+    							<div class="plot-detail-gallery owl-carousel" style="width: 100%; height: 500px;">
+    								{% for image in plot.images.all %}
+    									<div class="item">
+    										<img src="{{ image.image.url }}" class="img-fluid" alt="{{ plot.title }} image {{ forloop.counter }}" style="width: 100%; height: 500px; object-fit: cover;">
+    									</div>
+    								{% endfor %}
+    							</div>
+    						{% else %}
+    							<div class="img align-self-stretch" style="background-image: url({% static 'images/work-1.jpg' %}); height: 500px;"></div>
+    						{% endif %}
+    					</div>
+    					<div class="col-md-6 ftco-animate py-5">
+    						<div class="text py-5 pl-md-5">
+    							<div class="d-flex mb-4">
+			    					<div>
+				    					<h2 class="mb-0">{{ plot.title }}</h2>
+				    					<p class="text-muted mb-2"><i class="icon-map-marker"></i> {{ plot.location }}</p>
+									</div>
+									<div class="pl-md-4 text-right">
+										<h3 class="price mb-0">&#8377;{{ plot.price|floatformat:0 }}</h3>
+										<small class="text-muted">per cent</small>
+										<p class="mb-0 mt-2"><strong>Total: &#8377;{{ plot.total_price|floatformat:0 }}</strong></p>
+									</div>
+								</div>
+								<div class="mb-4">
+									<h4 class="mb-3">Property Details</h4>
+									<div class="row mb-3">
+										<div class="col-6">
+											<strong>Cent:</strong> {{ plot.cent|floatformat:2 }} cent
+										</div>
+										<div class="col-6">
+											<strong>Total Price:</strong> &#8377;{{ plot.price|floatformat:0 }}
+										</div>
+									</div>
+									<div class="row mb-3">
+										<div class="col-6">
+											<strong>Location:</strong> {{ plot.location }}
+										</div>
+										<div class="col-6">
+											<strong>Listed:</strong> {{ plot.created_at|date:"M d, Y" }}
+										</div>
+									</div>
+								</div>
+    							<p class="mb-4">{{ plot.description }}</p>
+    							<div class="border-top pt-4">
+    								<h5 class="mb-3">Seller Information</h5>
+    								<p class="mb-2"><strong>Name:</strong> {{ plot.seller_name }}</p>
+    								<p class="mb-0"><strong>Phone:</strong> <a href="tel:{{ plot.seller_phone }}">{{ plot.seller_phone }}</a></p>
+    							</div>
+    						</div>
+    					</div>
+    				</div>
+    			</div>
+    			<div class="col-md-12 tour-wrap {% if not can_view_fully %}blurred-content{% endif %}">
+    				<table class="table">
+					    <tbody>
+					      <tr>
+				      	  <th scope="row">Plot Title</th>
+					        <td>
+					        	<p>{{ plot.title }}</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Location</th>
+					        <td>
+					        	<p>{{ plot.location }}</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Cent</th>
+					        <td>
+					        	<p>{{ plot.cent|floatformat:2 }} cent</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Price per Cent</th>
+					        <td>
+					        	<p>&#8377;{{ plot.price|floatformat:0 }} per cent</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Total Price (Approx)</th>
+					        <td>
+					        	<p>&#8377;{{ plot.total_price|floatformat:0 }}</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Seller Name</th>
+					        <td>
+					        	<p>{{ plot.seller_name }}</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Seller Contact</th>
+					        <td>
+					        	<p><a href="tel:{{ plot.seller_phone }}">{{ plot.seller_phone }}</a></p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Description</th>
+					        <td>
+					        	<p>{{ plot.description }}</p>
+					        </td>
+					      </tr>
+					      <tr>
+				      	  <th scope="row">Listed Date</th>
+					        <td>
+					        	<p>{{ plot.created_at|date:"F d, Y" }}</p>
+					        </td>
+					      </tr>
+					    </tbody>
+					  </table>
+    			</div>
+        </div>
+      </div>
+    </section>
+    
+    {% if plot.map_address or plot.location %}
+    <section class="ftco-section ftco-no-pt ftco-no-pb {% if not can_view_fully %}blurred-content{% endif %}">
+      <div class="container-fluid px-md-5">
+        <div class="row">
+          <div class="col-12">
+            <h3 class="mb-4">Location Map</h3>
+            <div class="bg-white" style="width: 100%; height: 450px; border-radius: 8px; overflow: hidden;">
+              <iframe
+                width="100%"
+                height="100%"
+                style="border:0;"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q={{ plot.map_address|default:plot.location|urlencode }}&output=embed">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if not can_view_fully %}
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            {% if not user.is_authenticated or plan == 'none' %}
+              <h3 class="mb-3">Choose a Subscription Plan to View Details</h3>
+              <p class="text-muted">
+                Property details are blurred until you select a plan.
+              </p>
+            {% elif plan == 'basic' %}
+              <h3 class="mb-3">Basic Plan Limit Reached</h3>
+              <p class="text-muted">
+                With the Basic plan you can fully view details of only the first 5 properties.
+                This property is outside that limit. Upgrade to Premium for full access.
+              </p>
+            {% endif %}
+            <a href="{% url 'myapp:subscription' %}" class="btn btn-primary mt-2">Go to Subscription Plans</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <footer class="ftco-footer ftco-section">
+      <div class="container-fluid px-md-5">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Stayhome</h2>
+              <p>Far far away, behind the word mountains, far from the countries.</p>
+              <ul class="ftco-footer-social list-unstyled mt-5">
+                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">Community</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Search Properties</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>For Agents</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Reviews</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>FAQs</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-4">
+              <h2 class="ftco-heading-2">About Us</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Our Story</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Meet the team</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Careers</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Company</h2>
+              <ul class="list-unstyled">
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>About Us</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Press</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Careers</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope pr-4"></span><span class="text">info@yourdomain.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+	
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    
+  
+
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+  <script src="{% static 'js/popper.min.js' %}"></script>
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+  <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+  <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+  <script src="{% static 'js/aos.js' %}"></script>
+  <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+  <script src="{% static 'js/scrollax.min.js' %}"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="{% static 'js/google-map.js' %}"></script>
+  
+  <script src="{% static 'js/main.js' %}"></script>
+  
+  <script>
+    $(document).ready(function() {
+      $('.plot-detail-gallery').owlCarousel({
+        items: 1,
+        loop: true,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        autoplayHoverPause: true,
+        navText: [
+          '<span class="ion-ios-arrow-back"></span>',
+          '<span class="ion-ios-arrow-forward"></span>'
+        ]
+      });
+    });
+  </script>
+    
+  </body>
+</html>

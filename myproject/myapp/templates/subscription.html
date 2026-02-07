@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Subscription Plans - Stayhome</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'myapp:home' %}">Stayhome</a>
+      </div>
+    </nav>
+
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center mb-4">
+          <div class="col-md-8 text-center">
+            <h2>Choose Your Plan</h2>
+            <p class="text-muted mb-0">
+              Select a plan to control how you view property details and whether you can sell properties.
+            </p>
+          </div>
+        </div>
+
+        {% if messages %}
+          <div class="row justify-content-center mb-3">
+            <div class="col-md-8">
+              {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="row">
+          
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+              <div class="card-body d-flex flex-column">
+                <h4 class="card-title">Free</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Valid for 1 Day</h5>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Unlimited viewing access for 1 day</li>
+                  <li>All property details unblurred during that day</li>
+                  <li><strong>Selling not allowed</strong></li>
+                  <li>No payment required</li>
+                </ul>
+                {% if current_plan == 'free' and free_expires_at %}
+                  <p class="small text-success mt-auto">
+                    Active until {{ free_expires_at|date:"M d, Y H:i" }}.
+                  </p>
+                {% endif %}
+                <form method="post" action="{% url 'myapp:subscription' %}" class="mt-auto">
+                  {% csrf_token %}
+                  <input type="hidden" name="plan" value="free">
+                  <button type="submit" class="btn btn-outline-primary btn-block">
+                    Activate Free Plan
+                  </button>
+                </form>
+                <p class="small text-muted mt-2 mb-0">
+                  Once activated, you can view all property details for 24 hours without payment.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-primary">
+              <div class="card-body d-flex flex-column">
+                <h4 class="card-title">Basic</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Limited Access</h5>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>View details of <strong>up to 5 properties</strong></li>
+                  <li>Other properties remain blurred</li>
+                  <li><strong>Selling allowed</strong></li>
+                  <li>Payment required </li>
+                </ul>
+                {% if current_plan == 'basic' %}
+                  <p class="small text-success">
+                    Basic plan is currently active.
+                  </p>
+                {% endif %}
+                <div class="mt-auto">
+                  <h6>Payment Methods </h6>
+                  <ul class="small">
+                    <li>UPI</li>
+                    <li>Debit / Credit Card</li>
+                    <li>Net Banking</li>
+                    <li>Wallets</li>
+                  </ul>
+                 
+                  <form method="post" action="{% url 'myapp:subscription' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="basic">
+                    <button type="submit" class="btn btn-primary btn-block">
+                      Select Basic Plan
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100 border-warning">
+              <div class="card-body d-flex flex-column">
+                <h4 class="card-title">Premium</h4>
+                <h5 class="card-subtitle mb-2 text-muted">Full Access</h5>
+                <ul class="list-unstyled mt-3 mb-4">
+                  <li>Unlimited access to all property details</li>
+                  <li>No blurring anywhere</li>
+                  <li><strong>Selling allowed</strong></li>
+                  <li>Payment required </li>
+                </ul>
+                {% if current_plan == 'premium' %}
+                  <p class="small text-success">
+                    Premium plan is currently active.
+                  </p>
+                {% endif %}
+                <div class="mt-auto">
+                  <h6>Payment Methods </h6>
+                  <ul class="small">
+                    <li>UPI</li>
+                    <li>Debit / Credit Card</li>
+                    <li>Net Banking</li>
+                    <li>Wallets</li>
+                  </ul>
+              
+                  <form method="post" action="{% url 'myapp:subscription' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="premium">
+                    <button type="submit" class="btn btn-warning btn-block text-white">
+                      Select Premium Plan
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col text-center">
+            <a href="{% url 'myapp:home' %}" class="btn btn-outline-secondary">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+  </body>
+</html>
+
+
