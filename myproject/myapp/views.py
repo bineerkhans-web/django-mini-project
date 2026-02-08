@@ -120,7 +120,7 @@ def signin(request):
 			messages.success(request, 'Signed in successfully.')
 			return redirect('myapp:home')
 		messages.error(request, 'Invalid username or password.')
-		return redirect('signin')
+		return redirect('myapp:signin')
 
 	return render(request, 'signin.html')
 
@@ -129,7 +129,7 @@ def signout(request):
 	messages.success(request, 'Signed out successfully.')
 	return redirect('myapp:home')
 
-@login_required(login_url='signin')
+@login_required(login_url='myapp:signin')
 def profile(request):
 	user = request.user
 	User = get_user_model()
@@ -191,7 +191,7 @@ def profile(request):
 	return render(request, 'profile.html')
 
 
-@login_required(login_url='signin')
+@login_required(login_url='myapp:signin')
 def subscription(request):
 	user = request.user
 
